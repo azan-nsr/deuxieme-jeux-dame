@@ -54,3 +54,30 @@ def jouer_coup(plateau, x1, y1, x2, y2):
         milieu_x = (x1 + x2) // 2
         milieu_y = (y1 + y2) // 2
         plateau[milieu_x][milieu_y] = " "
+
+def partie():
+    plateau = creer_plateau()
+    joueur = "x"  # Joueur x commence
+
+    while True:
+        afficher_plateau(plateau)
+        print(f"Au tour du joueur {joueur}")
+
+        # Lecture des coordonnées
+        try:
+            x1, y1 = map(int, input("Coordonnées de départ (x y) : ").split())
+            x2, y2 = map(int, input("Coordonnées d’arrivée (x y) : ").split())
+        except ValueError:
+            print("Entrée invalide. Entrez deux nombres séparés par un espace.")
+            continue
+
+        # Vérification et exécution du coup
+        if deplacement_valide(plateau, x1, y1, x2, y2, joueur):
+            jouer_coup(plateau, x1, y1, x2, y2)
+            # Changer de joueur
+            joueur = "o" if joueur == "x" else "x"
+        else:
+            print("Coup invalide, réessayez.")
+
+if __name__ == "__main__":
+    partie()
